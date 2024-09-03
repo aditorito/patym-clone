@@ -1,8 +1,9 @@
 const { Router } = require("express");
 const router = Router();
-const { signupBody, signinBody } = require('../types')
+const { signupBody, signinBody, updateBody } = require('../types')
 const jwt = require("jsonwebtoken");
-const { JWT_SECRET } = require('../config')
+const authMiddleware = require('../middleware');
+const { JWT_SECRET } = require('../config');
 const { User } = require('../db/index')
 
 
@@ -89,4 +90,57 @@ router.post('/signin',async (req,res)=>{
     }
 });
 
+router.put("/user", authMiddleware,async (res, req) => {
+    try {
+        const { success } = updateBody.safeParse(req.body);
+        if (!success) {
+            return res.status(411).json({
+                message:"Error while updating"
+            })            
+        }
+        await User.updateOne({_id:req.userId}, req.body);
+        
+
+        res.json({
+            message:"Updated successfully"
+        })
+        
+    } catch (error) {
+        console.log(error);
+        
+        
+    }
+})
+
+router.get('/bulk', authMiddleware, async (res, req)=>{
+    const filter = req.query.filter || "";
+
+    const users = await User.find({
+        $or:[{
+            firstName: {
+                "$regrex":filter
+            }
+    },{
+        lastName:{
+            "$regrex":filter
+        }
+    }]
+    })
+    
+    if (!users) {
+        res.json({
+            message:"User not find"
+        })
+    }
+
+    res.json({
+        user: users.map((user)=>({
+            username: user.username,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            _id:user._id
+        }))
+    });
+
+});
 module.exports = router;
