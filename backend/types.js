@@ -9,7 +9,7 @@ const signupBody = z.object({
 
 const signinBody = z.object({
     username:z.string().email(),
-    password: Zod.string()
+    password: z.string()
 })
 
 module.exports={

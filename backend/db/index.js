@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 mongoose.connect('mongodb+srv://AdityaPratap:qoYeY20Bkg1E45rK@cluster0.p5yi9c8.mongodb.net/paytm-clone').then(()=>{
-    console.log("Database connected");
+    console.log("Database connected......");
     
 });
 
@@ -34,4 +34,9 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model('User', UserSchema);
+const User = mongoose.model('User', userSchema);
+
+
+module.exports = {
+    User
+}

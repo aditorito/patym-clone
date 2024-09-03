@@ -6,8 +6,6 @@ const { JWT_SECRET } = require('../config')
 const { User } = require('../db/index')
 
 
-
-
 router.post('/signup',async (req,res)=>{
     try {
         const { success } = signupBody.safeParse(req.body);
