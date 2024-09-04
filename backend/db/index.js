@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const { Schema } = require('zod');
+const types = require('../types');
 
 mongoose.connect('mongodb+srv://AdityaPratap:qoYeY20Bkg1E45rK@cluster0.p5yi9c8.mongodb.net/paytm-clone').then(()=>{
     console.log("Database connected......");
@@ -34,9 +36,23 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+const accountSchema = new mongoose.Schema({
+    userId: {
+        type : mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    balance: {
+        type: Number,
+        required: true
+    }
+});
+
 const User = mongoose.model('User', userSchema);
+const Account = mongoose.model('Account', accountSchema);
 
 
 module.exports = {
-    User
+    User,
+    Account
 }

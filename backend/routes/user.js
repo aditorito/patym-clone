@@ -4,7 +4,7 @@ const { signupBody, signinBody, updateBody } = require('../types')
 const jwt = require("jsonwebtoken");
 const authMiddleware = require('../middleware');
 const { JWT_SECRET } = require('../config');
-const { User } = require('../db/index')
+const { User,Account } = require('../db/index')
 
 
 router.post('/signup',async (req,res)=>{
@@ -33,6 +33,11 @@ router.post('/signup',async (req,res)=>{
             lastName: req.body.lastName
         })
         const userId = user._id;
+
+        await Account.create({
+            userId,
+            balance:1 + Math.random()*10000
+        })
 
         const token = jwt.sign({
             userId

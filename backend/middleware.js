@@ -5,7 +5,7 @@ const authMiddleware = (req, res, next) => {
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ') ) {
-        return res.status(403).json({});
+        return res.status(403).json({ error: 'Invalid or missing token' });
         
     }
 
@@ -17,13 +17,11 @@ const authMiddleware = (req, res, next) => {
 
         next();
     } catch (error) {
-        return res.status(403).json({});
+        return res.status(403).json({ error: 'Invalid or missing token' });
         
         
     }
 
 };
 
-module.exports = {
-    authMiddleware
-}
+module.exports = authMiddleware;
