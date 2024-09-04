@@ -95,7 +95,7 @@ router.post('/signin',async (req,res)=>{
     }
 });
 
-router.put("/user", authMiddleware,async (res, req) => {
+router.put("/user", authMiddleware,async (req, res) => {
     try {
         const { success } = updateBody.safeParse(req.body);
         if (!success) {
@@ -117,17 +117,17 @@ router.put("/user", authMiddleware,async (res, req) => {
     }
 })
 
-router.get('/bulk', authMiddleware, async (res, req)=>{
+router.get('/bulk', authMiddleware, async (req, res)=>{
     const filter = req.query.filter || "";
 
     const users = await User.find({
         $or:[{
             firstName: {
-                "$regrex":filter
+                "$regex":filter
             }
     },{
         lastName:{
-            "$regrex":filter
+            "$regex":filter
         }
     }]
     })
