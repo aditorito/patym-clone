@@ -9,6 +9,7 @@ const { User,Account } = require('../db/index')
 
 router.post('/signup',async (req,res)=>{
     try {
+        
         const { success } = signupBody.safeParse(req.body);
         if ( !success ) {
             return res.status(411).json({
@@ -25,6 +26,7 @@ router.post('/signup',async (req,res)=>{
             })
             
         }
+        
 
         const user = await User.create({
             username: req.body.username,
