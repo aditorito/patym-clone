@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const { Schema } = require('zod');
 const types = require('../types');
 
-mongoose.connect('mongodb+srv://AdityaPratap:qoYeY20Bkg1E45rK@cluster0.p5yi9c8.mongodb.net/paytm-clone').then(()=>{
+mongoose.connect('Your mongoose link to connect with database').then(()=>{
     console.log("Database connected......");
     
 });
